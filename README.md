@@ -88,4 +88,3 @@ App Server 版本差异、授权或尚未物化的空线程可能导致创建后
 `docs/`：协议与官方接口核实记录。
 `reports/`：本次实际验证结果。`requirements-verified.txt` 记录本次验证环境依赖快照；其他平台按 pyproject.toml 安装，Windows 专属依赖有平台条件。
 
-版本 V0.1 + V0.2 合并为一个 0.2.0 成品发布；没有人为生成三个重复版本。发布 zip 不包含 Python 环境、缓存、真实用户数据或 SQLite 演示数据。

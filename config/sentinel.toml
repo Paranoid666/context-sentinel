@@ -10,3 +10,10 @@ migrate_score = 65
 warn_utilization = 0.65
 migrate_utilization = 0.85
 turn_warning = 40
+
+[monitor]
+enabled = true
+warn_turns = 16
+migrate_turns = 48
+cooldown_turns = 8
+cooldown_seconds = 600

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "context-sentinel"
-version = "0.2.0"
+version = "0.3.0"
 description = "Capability-aware context health and verified handoff MCP service"
 requires-python = ">=3.12"
 dependencies = ["mcp>=1.20,<2", "pydantic>=2.11,<3"]

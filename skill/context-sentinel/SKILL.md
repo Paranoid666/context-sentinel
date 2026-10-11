@@ -1,13 +1,27 @@
 ---
 name: context-sentinel
-description: Assess context risk, save complete task ledgers and verify handoffs when long conversations, repeated errors, contradictions or context pressure threaten continuity. Use for Context Sentinel checkpoint and recovery workflows.
+description: Proactively remind users to save progress or move to a fresh chat during long AI tasks, repeated errors, contradictions and verification failures. Use Context Sentinel for turn-by-turn risk checks, deduplicated reminders and verified handoffs.
 ---
 
 # Context Sentinel
 
 Use the connected Context Sentinel MCP service when available. If its tools are absent, use the installed CLI or produce a manual handoff and explicitly disclose that persistence and verification were not executed. A skill alone cannot observe token usage, run continuously, open chat windows or switch the host UI.
 
-At a task boundary, after a verification failure, or when a user reports contradictions or drift, call `context_health` with observed signals. Label estimates as estimates. Do not invent token counts or classify absent telemetry as healthy. Risk scores are heuristics, not evidence that hallucination occurred.
+## Proactive reminder mode
+
+When this skill is selected for an ongoing task, start proactive mode without waiting for the user to ask for a risk check. Call `monitor_open` once with a project label and a stable request key for this chat/task. Keep the returned local session_id across subsequent turns in the same chat. A fresh chat needs a new request key/session; this ID is not a host thread ID and does not grant chat access.
+
+At the start of every subsequent task turn, call `monitor_observe` with session_id, a unique event_id, a stable turn_id for that user/assistant interaction, trigger=`turn_start`, and observed signals. Also check immediately at task boundaries and after verification failures, using a new event_id but the same turn_id for multiple checks within one turn. Retries of an identical event must reuse its event_id. Do not invent hidden token counts, past turn counts or evidence; source=`estimate` marks estimates. If the current context has no dependable session ID, disclose that a new monitoring session is starting and previous monitoring counts are not recovered.
+
+If should_notify is true, display reminder.message in a concise commentary message before continuing work, explain the observed reason, and then call `monitor_ack` with its ID. Track displayed IDs within this context. If an acknowledgement fails, retry it before displaying the same reminder again. A pending ID is an outbox item, not a new reminder on each poll. Do not acknowledge before showing it. On migration severity, prepare a complete verified handoff as authorized, and tell the user they can open a fresh chat. Do not switch windows or create threads without authorization. Do not turn a recommendation into a forced interruption of the task.
+
+Default thresholds: warn after 16 observed turns; recommend a fresh chat after 48; reported risk or verification failures can trigger earlier. Following delivery acknowledgement, the same level can remind again only after both 8 additional observed turns and 10 minutes. Escalation bypasses this cooldown. If the user asks for quiet, call `monitor_snooze` for their requested duration (0 resumes). Do not silently snooze on your own.
+
+This is proactive checking during an active skill workflow, not guaranteed background monitoring. The model must follow these instructions or a host must send observation hooks; no native desktop callback, popup or idle-time wakeup is registered. When MCP is absent, use the CLI if available, otherwise apply the same explicit observed-risk/length criteria and give a manual reminder, disclosing that persistent counting and deduplication are unavailable. Never say automatic monitoring has been enabled merely because this SKILL.md exists.
+
+## Checkpoint and recovery
+
+`context_health` remains available for one-off checks. Label estimates as estimates and do not classify absent telemetry as healthy. Risk scores are heuristics, not evidence that hallucination occurred.
 
 Follow the returned action: `continue`, `checkpoint`, or `prepare_handoff`. For checkpointing, preserve the objective, constraints, decisions, evidence-tagged facts, completed and pending work, next action, artifact paths and SHA256 hashes, unresolved questions, and existing authorization scope. All ledger fields are required; use empty lists only when truly empty. Do not save passwords, tokens, irrelevant personal data or hidden reasoning.
 

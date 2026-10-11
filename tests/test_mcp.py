@@ -21,6 +21,15 @@ def test_real_stdio_mcp_roundtrip(tmp_path, payload):
                 names = {tool.name for tool in listing.tools}
                 assert {"context_health", "checkpoint_save", "checkpoint_import", "restore_prepare", "restore_commit"} <= names
                 assert "stage_thread" not in names
+                opened = await session.call_tool("monitor_open", {"project_id": "mcp-monitor", "request_key": "chat-1"})
+                sid = json.loads(opened.content[0].text)["session_id"]
+                observed = await session.call_tool("monitor_observe", {"observation": {"session_id": sid, "event_id": "e-1", "turn_id": "t-1", "signals": {"failed_verifications": 3}}})
+                decision = json.loads(observed.content[0].text)
+                assert decision["should_notify"] and decision["reminder"]["severity"] == "migration"
+                acknowledged = await session.call_tool("monitor_ack", {"session_id": sid, "reminder_id": decision["reminder"]["id"]})
+                assert json.loads(acknowledged.content[0].text)["status"] == "acknowledged"
+                replay = await session.call_tool("monitor_observe", {"observation": {"session_id": sid, "event_id": "e-1", "turn_id": "t-1", "signals": {"failed_verifications": 3}}})
+                assert not json.loads(replay.content[0].text)["should_notify"]
                 result = await session.call_tool("context_health", {"signals": {"failed_verifications": 3}})
                 data = json.loads(result.content[0].text)
                 assert data["action"] == "prepare_handoff"

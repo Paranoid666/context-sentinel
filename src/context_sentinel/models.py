@@ -74,10 +74,33 @@ class RestoreAck(StrictModel):
     next_action: str
 
 
+class MonitorPolicy(StrictModel):
+    enabled: bool = True
+    warn_turns: int = Field(default=16, ge=1)
+    migrate_turns: int = Field(default=48, ge=2)
+    cooldown_turns: int = Field(default=8, ge=0)
+    cooldown_seconds: int = Field(default=600, ge=0)
+
+    @model_validator(mode="after")
+    def ordered(self):
+        if self.warn_turns >= self.migrate_turns:
+            raise ValueError("warn_turns must precede migrate_turns")
+        return self
+
+
+class Observation(StrictModel):
+    session_id: str = Field(min_length=1, max_length=128)
+    event_id: str = Field(min_length=1, max_length=256)
+    turn_id: str = Field(min_length=1, max_length=256)
+    trigger: Literal["turn_start", "task_boundary", "verification_failure", "manual"] = "turn_start"
+    signals: Signals = Field(default_factory=Signals)
+
+
 class Config(StrictModel):
     data_dir: str = ".context-sentinel"
     workspace: str = "."
     policy: Policy = Field(default_factory=Policy)
+    monitor: MonitorPolicy = Field(default_factory=MonitorPolicy)
     app_server_enabled: bool = False
     codex_executable: str = "codex"
 

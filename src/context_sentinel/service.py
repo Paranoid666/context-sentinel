@@ -5,6 +5,7 @@ from pathlib import Path
 from .health import assess
 from .models import Config, Handoff, RestoreAck, Signals
 from .store import IntegrityError, Store
+from .monitor import Monitor
 
 
 class Sentinel:
@@ -12,6 +13,7 @@ class Sentinel:
         self.config = config
         self.workspace = Path(config.workspace).resolve()
         self.store = Store(Path(config.data_dir))
+        self.monitor = Monitor(self.store, config)
 
     def health(self, signals: dict) -> dict:
         return assess(Signals.model_validate(signals), self.config.policy)

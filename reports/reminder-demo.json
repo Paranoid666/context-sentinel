@@ -1,0 +1,32 @@
+{
+  "reminders": [
+    {
+      "turn": 3,
+      "automatic_switch": false,
+      "id": "298ee74228d94c958e3c0635960eb8a9",
+      "message": "建议先保存当前进度并核对任务约束；如果还要继续长任务，可以准备交接到新聊天。",
+      "next_action": "checkpoint",
+      "reasons": [
+        "observed conversation reached checkpoint turn threshold"
+      ],
+      "severity": "warning"
+    },
+    {
+      "turn": 5,
+      "automatic_switch": false,
+      "id": "d1e3eea66bab4b02a5a3a482327129d2",
+      "message": "建议换到新聊天继续，先保存并验证交接清单；当前聊天会保留，窗口需要手动切换。",
+      "next_action": "prepare_handoff",
+      "reasons": [
+        "observed conversation reached migration turn threshold"
+      ],
+      "severity": "migration"
+    }
+  ],
+  "observed_turns_after_restart": 5,
+  "acknowledged_event_replay_does_not_notify": true,
+  "warning_then_escalation": true,
+  "host_delivery": "demo printed messages and acknowledged them",
+  "desktop_background_monitor": "unsupported",
+  "demo_thresholds": "3/5; defaults are 16/48"
+}

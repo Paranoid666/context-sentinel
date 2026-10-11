@@ -3,6 +3,7 @@ import json
 import shutil
 
 from .service import Sentinel
+from . import __version__
 
 
 def capabilities(host: str, sentinel: Sentinel) -> dict:
@@ -11,6 +12,8 @@ def capabilities(host: str, sentinel: Sentinel) -> dict:
     enabled = host == "codex_app_server" and sentinel.config.app_server_enabled
     executable = shutil.which(sentinel.config.codex_executable)
     return {"host": host, "manual_handoff": "supported", "checkpoint": "supported",
+            "proactive_reminders": "supported_with_observation_hooks",
+            "reminder_delivery": "host_must_display_then_ack", "background_monitor": "unsupported",
             "token_telemetry": "unsupported", "read_current_chat": "unsupported",
             "ui_switch": "unsupported", "automatic_model_ack": "unsupported",
             "new_thread": "available_unprobed" if enabled and executable else "unsupported",
@@ -32,7 +35,7 @@ class AppServerClient:
             stderr=asyncio.subprocess.DEVNULL, limit=8 * 1024 * 1024)
         try:
             self.initialized = await self.call("initialize", {
-                "clientInfo": {"name": "context_sentinel", "title": "Context Sentinel", "version": "0.2.0"}})
+                "clientInfo": {"name": "context_sentinel", "title": "Context Sentinel", "version": __version__}})
             await self.send({"method": "initialized", "params": {}})
         except BaseException:
             await self.__aexit__(None, None, None)

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "context-sentinel": {
+      "command": "ABSOLUTE_PATH_TO_PYTHON",
+      "args": ["-m", "context_sentinel.server", "--config", "ABSOLUTE_PATH_TO_SENTINEL_TOML"]
+    }
+  }
+}

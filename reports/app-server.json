@@ -1,0 +1,46 @@
+{
+  "probe": {
+    "status": "initialized",
+    "server": {
+      "userAgent": "Codex Desktop/0.162.0-alpha.17.2 (Windows 10.0.26200; x86_64) dumb (context_sentinel; 0.2.0)",
+      "codexHome": "<LOCAL_CODEX_HOME>",
+      "platformFamily": "windows",
+      "platformOs": "windows"
+    },
+    "new_thread": "protocol_available_not_yet_created",
+    "ui_switch": "unsupported"
+  },
+  "reviewable_plan": {
+    "status": "confirmation_required",
+    "plan": {
+      "checkpoint_id": "53814677d7b7445bb837004c3b16b13c",
+      "handoff_file": "<WORKSPACE>/work/app-server-state/checkpoints/53814677d7b7445bb837004c3b16b13c.json",
+      "payload_sha256": "2ad073d4a1108c6d052b6bd20ce87074e6b2244cfafeb3a7a032e4b3b71ec82e",
+      "cwd": "<PROJECT_ROOT>",
+      "sandbox": "read-only",
+      "model_turn": false
+    }
+  },
+  "real_stage": {
+    "status": "staged_awaiting_ack",
+    "target_thread": "01a12a3b-0e7b-70b0-9dea-5f26ae59b2de",
+    "plan": {
+      "checkpoint_id": "53814677d7b7445bb837004c3b16b13c",
+      "handoff_file": "<WORKSPACE>/work/app-server-state/checkpoints/53814677d7b7445bb837004c3b16b13c.json",
+      "payload_sha256": "2ad073d4a1108c6d052b6bd20ce87074e6b2244cfafeb3a7a032e4b3b71ec82e",
+      "cwd": "<PROJECT_ROOT>",
+      "sandbox": "read-only",
+      "model_turn": false
+    },
+    "ui_switch": "unsupported",
+    "active_checkpoint_changed": false
+  },
+  "active_checkpoint_after_stage": null,
+  "duplicate_retry": {
+    "status": "staged_awaiting_ack",
+    "target_thread": "01a12a3b-0e7b-70b0-9dea-5f26ae59b2de",
+    "detail": "thread identity verified; model has not read handoff",
+    "duplicate_suppressed": true
+  },
+  "publication_note": "Local machine paths redacted; original runtime verification outcomes preserved."
+}

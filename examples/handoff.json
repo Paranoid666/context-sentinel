@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "project_id": "demo-project",
+  "source_thread": "manual-source",
+  "objective": "Complete the Context Sentinel demonstration",
+  "constraints": ["Preserve existing user files", "Do not execute a model turn"],
+  "decisions": ["SQLite is authoritative; JSON is portable"],
+  "facts": [{"claim": "The example ledger has no artifact dependencies", "evidence": "artifacts array is empty", "status": "verified"}],
+  "completed": ["Create a complete ledger"],
+  "pending": ["Verify and acknowledge the ledger"],
+  "next_action": "Restate task state and commit the verified restore",
+  "artifacts": [],
+  "unresolved": [],
+  "authorizations": ["Local demo only; no external messages"]
+}

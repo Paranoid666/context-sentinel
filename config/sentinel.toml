@@ -1,0 +1,12 @@
+# Paths are resolved relative to the server process working directory, not this file.
+data_dir = ".context-sentinel"
+workspace = "."
+app_server_enabled = false
+codex_executable = "codex"
+
+[policy]
+warn_score = 35
+migrate_score = 65
+warn_utilization = 0.65
+migrate_utilization = 0.85
+turn_warning = 40

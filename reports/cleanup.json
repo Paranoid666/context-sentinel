@@ -1,0 +1,22 @@
+{
+  "removed_regenerable_bytes": 5144652,
+  "removed_paths": [
+    "outputs/context-sentinel/.pytest_cache",
+    "outputs/context-sentinel/tests/__pycache__",
+    "outputs/context-sentinel/src/context_sentinel/__pycache__",
+    "work/wheel-check",
+    "work/wheel-smoke-state",
+    "work/codex-schema",
+    "work/app-server-doc.html",
+    "work/app-server-doc.txt",
+    "work/prepare_integration.py",
+    "work/run_stage.py",
+    "work/verify_wheel.py"
+  ],
+  "retained": [
+    "project source and materials",
+    "work/venv runtime",
+    "work/app-server-state handoff and migration data",
+    "release 0.2.0"
+  ]
+}

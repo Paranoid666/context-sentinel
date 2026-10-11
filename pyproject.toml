@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "context-sentinel"
+version = "0.2.0"
+description = "Capability-aware context health and verified handoff MCP service"
+requires-python = ">=3.12"
+dependencies = ["mcp>=1.20,<2", "pydantic>=2.11,<3"]
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10"]
+
+[project.scripts]
+context-sentinel = "context_sentinel.cli:main"
+context-sentinel-mcp = "context_sentinel.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/context_sentinel"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+

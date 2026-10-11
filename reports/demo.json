@@ -1,0 +1,22 @@
+{
+  "health": {
+    "score": 65,
+    "action": "prepare_handoff",
+    "reasons": [
+      "contradictions reported",
+      "long conversation",
+      "context utilization above migration threshold"
+    ],
+    "token_utilization": 0.9,
+    "measurement_source": "estimate",
+    "observability": "reported",
+    "automatic_switch": false,
+    "note": "Heuristic only. Unknown token usage is not evidence of low risk; a fresh context does not guarantee correctness."
+  },
+  "idempotent_retry": true,
+  "initial_restore": "committed",
+  "verification_failure_preserved_old_state": true,
+  "recovery_after_artifact_repair": "committed",
+  "portable_import_restore": "committed",
+  "model_or_ui_control": "unsupported; not attempted"
+}
